@@ -1,0 +1,182 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 20px;
+}
+
+/* Dark Mode */
+.dark-mode {
+    background-color: #1e1e1e;
+    color: white;
+}
+
+/* Profile Container */
+.profile-container {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Profile Circle */
+.profile-circle {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    overflow: hidden;
+    cursor: pointer;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Profile Picture */
+.profile-circle img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Dashboard Boxes */
+.BOXES {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+
+/* Individual Box */
+.box {
+    padding: 20px;
+    background: lightblue;
+    cursor: pointer;
+    border-radius: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    width: 150px;
+    text-align: center;
+    transition: 0.3s;
+}
+
+.box:hover {
+    background: #79aaff;
+}
+
+/* Special Color for Diary Box */
+#box4 {
+    background: lightcoral;
+}
+
+#box4:hover {
+    background: #ff7f7f;
+}
+
+/* To-Do List Container */
+.to-do-container {
+    display: none;
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+    margin-top: 10px;
+    text-align: left;
+    max-width: 300px;
+    margin: auto;
+}
+
+/* To-Do List Settings Button */
+.settings-button {
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    padding: 5px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 14px;
+    margin: 3px;
+}
+
+.settings-button:hover {
+    background-color: #0056b3;
+}
+
+/* Dropdown for Settings */
+.dropdown {
+    display: none;
+    position: absolute;
+    background-color: white;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.dropdown a {
+    display: block;
+    padding: 10px;
+    text-decoration: none;
+    color: black;
+}
+
+.dropdown a:hover {
+    background-color: #f4f4f4;
+}
+
+/* Delete Button */
+.delete-button {
+    background-color: red;
+    color: white;
+    border: none;
+    cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 3px;
+}
+
+/* To-Do List Task Items */
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    margin: 10px;
+    padding: 10px;
+    background: #605757;
+    display: flex;
+    justify-content: space-between;
+    border-radius: 5px;
+    color: white;
+}
+
+/* Voice Recorder Section */
+.voice-section {
+    display: none;
+    margin-top: 10px;
+    padding: 15px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    max-width: 300px;
+    margin: auto;
+}
+
+.voice-section button {
+    background: #ff9800;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    color: white;
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+.voice-section button:hover {
+    background: #e68900;
+}

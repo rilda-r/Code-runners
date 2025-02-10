@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyMove - Personal Tracker</title>
+    <link rel="stylesheet" href="style2.css">
+</head>
+<body>
+
+    <h1 id="main-title">MY DAY</h1>
+
+    <!-- Profile Section -->
+    <div class="profile-container">
+        <div class="profile-circle" id="profileCircle">
+            <input type="file" id="fileInput" accept="image/*" hidden>
+            <img id="profilePic" src="" alt="Profile Picture">
+        </div>
+    </div>
+
+    <!-- Dashboard Boxes -->
+    <div class="BOXES">
+        <div id="box1" class="box" onclick="toggleToDoList()">TO DO LIST</div>
+        <div id="box2" class="box">WATER TRACKER</div>
+        <div id="box3" class="box">MOOD TRACKER</div>
+        <div id="box4" class="box" onclick="toggleDiary()">DIARY</div>
+    </div>
+
+    <!-- To-Do List Container (Hidden by Default) -->
+    <div id="toDoContainer" class="to-do-container">
+        <h2>To-Do List</h2>
+        <form id="taskForm">
+            <input type="text" id="taskInput" placeholder="Enter a task">
+            <button type="submit">Add</button>
+        </form>
+        <ul id="taskList"></ul>
+        <button class="settings-button" onclick="toggleToDoSettings()">⚙ Settings</button>
+        <div id="toDoSettings" class="dropdown">
+            <a href="#" onclick="toggleTheme()">🔆 Change Theme</a>
+            <a href="#" onclick="sortTasks()">📋 Sort Tasks</a>
+            <a href="#" onclick="clearTasks()">⚡ Clear All</a>
+        </div>
+    </div>
+
+    <!-- Diary Container (Hidden by Default) -->
+    <div id="diaryContainer" class="voice-section">
+        <h2>Diary Voice Recorder</h2>
+        <button onclick="startRecording()">🎤 Start Recording</button>
+        <button onclick="stopRecording()">⏹ Stop Recording</button>
+        <audio id="audioPlayback" controls></audio>
+    </div>
+
+    <script src="script2.js"></script>
+</body>
+</html>
