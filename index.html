@@ -7,16 +7,39 @@
 
     <body>
         <h1 id = "main-title">MY DAY</h1>
+        <div class = "image">
+        <div class="profile-container">
+            <div class="profile-circle" id="profileCircle">
+                <input type="file" id="fileInput" accept="image/*" hidden>
+                <img id="profilePic" src="" alt="Profile Picture">
+                
+            </div>
+            
+        </div>
+        <button id="saveBtn"><h6>Save</h6></button>
+    
+    </div>
+    </div>
+        <!-- Fixed Preview Circle -->
+        
+     
+
         <div id = "mainbox">
-            <div id = "circle"></div>
+                <div id = "mini-circle">
+                    <div class="preview-container">
+                        <div class="preview-circle">
+                            <img id="previewPic" >
+                        </div>
+                    </div>
+                </div>
+            
             <div class = "BOXES">
                 <div id = "box1" class = "box">TO DO LIST</div>
                 <div id = "box2" class = "box">WATER TRACKER</div>
                 <div id = "box3" class = "box">MOOD TRACKER</div>
             </div>
-        </div>
-         
-        
+        </div>  
+      
         <div id="popup" class="popup">
             <textarea id="popup-content" placeholder="Write or paste your content here..."></textarea>
             <button id="close-btn">Close</button>
