@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyMove - Login</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!--Login Page -->
+    <div id="loginPage" class="login-container">
+        <h2>Login to MyMove</h2>
+        <input type="text" id="username" placeholder="Enter Username">
+        <input type="password" id="password" placeholder="Enter Password">
+        <button onclick="login()">Login</button>
+        <p id="errorMessage"></p>
+    </div>
+
+    <!-- Main Page (Hidden Initially) -->
+    <div id="mainPage" class="hidden">
+        <h1 id="title">MY DAY 🤸‍♀️</h1>
+    
+     <!-- Settings Button -->
+     <div class="settings-container">
+        <button class="settings-button" onclick="toggleDropdown()">⚙ Settings</button>
+        <div id="settingsDropdown" class="dropdown">
+            <!-- <a href="#" onclick="checkPassword()">🔑 Login</a> -->
+            <a href="#" onclick="logout()">🚪 Logout</a>
+                <a href="#" onclick="toggleTheme()">🔆 Change Theme</a>
+        </div>
+    </div>
+    
+    <!-- Profile Section -->
+    <div class="profile-container">
+        <div class="profile-circle" id="profileCircle">
+            <input type="file" id="fileInput" accept="image/*" hidden>
+            <img id="profilePic" src="" alt="p">
+            <span class="profile-text">profile😉</span>
+        </div>
+    </div>
+
+    <!-- Functional Boxes -->
+    <div class="BOXES">
+        <div id="box1" class="box">TO DO LIST✅</div>
+        <div id="box2" class="box">WATER TRACKER💧</div>
+        <div id="box3" class="box">MOOD TRACKER🤔</div>
+        <div id="box4" class="box">DIARY📖</div>
+    </div>
+
+    <!-- Popups for each section -->
+    <div id="popup1" class="popup">
+        <h2>To-Do List</h2>
+    
+        <!-- Task Input Box -->
+        <input type="text" id="taskInput" placeholder="Enter task">
+        <button onclick="addTask()">Add Task</button>
+    
+        <!-- Task List -->
+        <ul id="taskList"></ul>
+    
+        <!-- Clear All Tasks Button -->
+        <button onclick="clearTasks()">Clear All</button>
+    
+        <button onclick="closePopup('popup1')">Close</button>
+    </div>
+    
+
+    <div id="popup2" class="popup">
+        <h2>Water Tracker</h2>
+        <p>Track your daily water intake.</p>
+    
+        <!-- Water Intake Display -->
+        <p>Glasses Drunk: <span id="waterCount">0</span>/8</p>
+        
+        <!-- Progress Bar -->
+        <div class="progress-container">
+            <div id="progressBar" class="progress-bar"></div>
+        </div>
+    
+        <!-- Buttons to Add/Remove Water -->
+        <button onclick="increaseWater()">+ Add Glass</button>
+        <button onclick="decreaseWater()">- Remove Glass</button>
+    
+        <button onclick="closePopup('popup2')">Close</button>
+    </div>
+    
+
+    <div id="popup3" class="popup">
+        <h2>Mood Tracker</h2>
+        <p><strong>Enter Text for Mood Analysis:</strong></p>
+        <textarea id="moodText" placeholder="Type or paste your text here..."></textarea>
+        <button onclick="analyzeMood()">Analyze Mood</button>
+        <p><strong>Detected Mood:</strong></p>
+        <p id="moodResult">Mood will appear here 😊</p>
+        <button onclick="closePopup('popup3')">Close</button>
+    </div>
+    
+
+    <div id="popup4" class="popup">
+        <h2>Diary (Voice Recorder)</h2>
+        <button onclick="startRecording()">🎤 Start Recording</button>
+        <button onclick="stopRecording()">🛑 Stop Recording</button>
+        <p><strong>Recorded Text:</strong></p>
+        <p id="recordedText">Your speech will appear here...</p>
+        <button onclick="closePopup('popup4')">Close</button>
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
