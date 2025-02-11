@@ -132,8 +132,8 @@ h1 {
     position: relative;
 }
 .profile-circle img {
-    width: 150%;
-    height: 100%;
+    width: 180%;
+    height: 220%;
     object-fit: cover;
     display: none;
 }
@@ -213,3 +213,20 @@ h1 {
     background-color: rgba(0, 0, 0, 0.5);
     z-index: 5;
 }
+/* Water Tracker Styling */
+.progress-container {
+    width: 100%;
+    background-color: #ddd;
+    border-radius: 10px;
+    margin: 10px 0;
+    height: 20px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 100%;
+    width: 0%;
+    background-color: #4caf50;
+    transition: width 0.3s ease-in-out;
+}
+

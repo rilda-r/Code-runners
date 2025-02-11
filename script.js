@@ -124,3 +124,31 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 });
+// Load Water Intake from Local Storage
+let waterCount = parseInt(localStorage.getItem("waterCount")) || 0;
+updateWaterTracker();
+
+// Function to Increase Water Intake
+function increaseWater() {
+    if (waterCount < 8) {
+        waterCount++;
+        updateWaterTracker();
+        localStorage.setItem("waterCount", waterCount);
+    }
+}
+
+// Function to Decrease Water Intake
+function decreaseWater() {
+    if (waterCount > 0) {
+        waterCount--;
+        updateWaterTracker();
+        localStorage.setItem("waterCount", waterCount);
+    }
+}
+
+// Function to Update Water Tracker Display
+function updateWaterTracker() {
+    document.getElementById("waterCount").innerText = waterCount;
+    let progress = (waterCount / 8) * 100; // Calculate Progress %
+    document.getElementById("progressBar").style.width = progress + "%";
+}
