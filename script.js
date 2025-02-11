@@ -152,3 +152,110 @@ function updateWaterTracker() {
     let progress = (waterCount / 8) * 100; // Calculate Progress %
     document.getElementById("progressBar").style.width = progress + "%";
 }
+// Load Tasks from Local Storage
+document.addEventListener("DOMContentLoaded", loadTasks);
+
+function addTask() {
+    let taskInput = document.getElementById("taskInput");
+    let taskText = taskInput.value.trim();
+
+    if (taskText === "") {
+        alert("Task cannot be empty!");
+        return;
+    }
+
+    let taskList = document.getElementById("taskList");
+
+    // Create Task Item
+    let li = document.createElement("li");
+    li.innerHTML = `
+        <span>${taskText}</span>
+        <button class="delete-btn" onclick="deleteTask(this)">❌</button>
+    `;
+
+    taskList.appendChild(li);
+    taskInput.value = ""; // Clear input field
+
+    saveTasks();
+}
+
+function deleteTask(button) {
+    button.parentElement.remove();
+    saveTasks();
+}
+
+function clearTasks() {
+    document.getElementById("taskList").innerHTML = "";
+    saveTasks();
+}
+
+// Save Tasks to Local Storage
+function saveTasks() {
+    let tasks = [];
+    document.querySelectorAll("#taskList li span").forEach(task => {
+        tasks.push(task.innerText);
+    });
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+}
+
+// Load Tasks from Local Storage
+function loadTasks() {
+    let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+    let taskList = document.getElementById("taskList");
+
+    tasks.forEach(taskText => {
+        let li = document.createElement("li");
+        li.innerHTML = `
+            <span>${taskText}</span>
+            <button class="delete-btn" onclick="deleteTask(this)">❌</button>
+        `;
+        taskList.appendChild(li);
+    });
+}
+let recognition;
+let recordedText = "";
+
+// 🎤 Start Recording Function
+function startRecording() {
+    recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+    recognition.lang = "en-US"; // Set language
+    recognition.interimResults = false; // Get only final result
+
+    recognition.onresult = (event) => {
+        recordedText = event.results[0][0].transcript;
+        document.getElementById("recordedText").innerText = recordedText;
+        analyzeMood(recordedText); // Send text for mood analysis
+    };
+
+    recognition.start();
+}
+
+// 🛑 Stop Recording Function
+function stopRecording() {
+    if (recognition) {
+        recognition.stop();
+    }
+}
+
+// 📊 Sentiment Analysis using API
+function analyzeMood(text) {
+    fetch("https://api.textgears.com/sentiment?key=YOUR_API_KEY&text=" + encodeURIComponent(text))
+        .then(response => response.json())
+        .then(data => {
+            let mood = data.response.score_tag;
+            let moodText = "Neutral";
+            let emoji = "😐";
+
+            if (mood === "P+") { moodText = "Very Positive"; emoji = "😁"; }
+            else if (mood === "P") { moodText = "Positive"; emoji = "😊"; }
+            else if (mood === "NEU") { moodText = "Neutral"; emoji = "😐"; }
+            else if (mood === "N") { moodText = "Negative"; emoji = "😞"; }
+            else if (mood === "N+") { moodText = "Very Negative"; emoji = "😢"; }
+
+            document.getElementById("moodResult").innerText = moodText + " " + emoji;
+        })
+        .catch(error => {
+            console.error("Error fetching mood:", error);
+            document.getElementById("moodResult").innerText = "Mood analysis failed ❌";
+        });
+}

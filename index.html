@@ -51,11 +51,20 @@
     <!-- Popups for each section -->
     <div id="popup1" class="popup">
         <h2>To-Do List</h2>
-        <ul id="taskList"></ul>
+    
+        <!-- Task Input Box -->
         <input type="text" id="taskInput" placeholder="Enter task">
         <button onclick="addTask()">Add Task</button>
+    
+        <!-- Task List -->
+        <ul id="taskList"></ul>
+    
+        <!-- Clear All Tasks Button -->
+        <button onclick="clearTasks()">Clear All</button>
+    
         <button onclick="closePopup('popup1')">Close</button>
     </div>
+    
 
     <div id="popup2" class="popup">
         <h2>Water Tracker</h2>
@@ -79,9 +88,22 @@
 
     <div id="popup3" class="popup">
         <h2>Mood Tracker</h2>
+        
+        <!-- Voice Recorder -->
+        <button onclick="startRecording()">🎤 Start Recording</button>
+        <button onclick="stopRecording()">🛑 Stop Recording</button>
+        
+        <!-- Display Transcribed Text -->
+        <p><strong>Recorded Text:</strong></p>
+        <p id="recordedText">Your speech will appear here...</p>
+    
+        <!-- Mood Result -->
+        <p><strong>Detected Mood:</strong></p>
         <p id="moodResult">Mood will appear here 😊</p>
+    
         <button onclick="closePopup('popup3')">Close</button>
     </div>
+    
 
     <div id="popup4" class="popup">
         <h2>Diary (Voice Recorder)</h2>
