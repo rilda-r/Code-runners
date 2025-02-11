@@ -212,7 +212,6 @@ function loadTasks() {
         taskList.appendChild(li);
     });
 }
-let recognition;
 let recordedText = "";
 
 // 🎤 Start Recording Function
