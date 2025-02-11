@@ -66,3 +66,26 @@ function stopRecording() {
         document.getElementById("recordedText").innerText += " (Recording Stopped)";
     }
 }
+document.addEventListener('DOMContentLoaded', function() {
+    const fileInput = document.getElementById('fileInput');
+    const profilePic = document.getElementById('profilePic');
+    const profileCircle = document.getElementById('profileCircle');
+
+    // Trigger file input when the profile circle is clicked
+    profileCircle.addEventListener('click', function() {
+        fileInput.click();
+    });
+
+    // Handle file selection
+    fileInput.addEventListener('change', function(event) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                profilePic.src = e.target.result;
+                profilePic.style.display = 'block';
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+});
