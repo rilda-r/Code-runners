@@ -3,58 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MyMove - Mood & Task Tracker</title>
+    <title>MyMove</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <h1 id="main-title">MY DAY</h1>
-
-    <!-- Profile Picture (Click to Upload) -->
+    <!-- Main Heading -->
+    <h1>MY DAY</h1>
+    
+     <!-- Settings Button -->
+     <div class="settings-container">
+        <button class="settings-button" onclick="toggleDropdown()">⚙ Settings</button>
+        <div id="settingsDropdown" class="dropdown">
+            <a href="#" onclick="checkPassword()">🔑 Login</a>
+            <a href="#" onclick="logout()">🚪 Logout</a>
+                <a href="#" onclick="toggleTheme()">🔆 Change Theme</a>
+        </div>
+    </div>
+    
+    <!-- Profile Section -->
     <div class="profile-container">
         <div class="profile-circle" id="profileCircle">
             <input type="file" id="fileInput" accept="image/*" hidden>
             <img id="profilePic" src="" alt="Profile Picture">
+            <span class="profile-text">Profile Picture</span>
         </div>
     </div>
 
-    <!-- Main Functional Boxes -->
-    <div id="mainbox">
-        <div class="BOXES">
-            <div id="box1" class="box" onclick="openToDoList()">TO-DO LIST</div>
-            <div id="box2" class="box" onclick="openDiary()">DIARY</div>
-            <div id="box3" class="box" onclick="openMoodTracker()">MOOD TRACKER</div>
-        </div>
+    <!-- Functional Boxes -->
+    <div class="BOXES">
+        <div id="box1" class="box">TO DO LIST</div>
+        <div id="box2" class="box">WATER TRACKER</div>
+        <div id="box3" class="box">MOOD TRACKER</div>
+        <div id="box4" class="box">DIARY</div>
     </div>
 
-    <!-- To-Do List Popup -->
-    <div id="todo-popup" class="popup">
+    <!-- Popups for each section -->
+    <div id="popup1" class="popup">
         <h2>To-Do List</h2>
-        <form id="taskForm">
-            <input type="text" id="taskInput" required placeholder="Enter a task">
-            <button type="submit">Add Task</button>
-        </form>
         <ul id="taskList"></ul>
-        <button onclick="clearTasks()">Clear All</button>
-        <button onclick="closeToDoList()">Close</button>
+        <input type="text" id="taskInput" placeholder="Enter task">
+        <button onclick="addTask()">Add Task</button>
+        <button onclick="closePopup('popup1')">Close</button>
     </div>
 
-    <!-- Diary (Voice Recorder) -->
-    <div id="diary-popup" class="popup">
-        <h2>Diary - Voice Recorder</h2>
-        <button onclick="startVoiceRecording()">🎤 Start Recording</button>
-        <p id="voice-output"></p>
-        <button onclick="closeDiary()">Close</button>
+    <div id="popup2" class="popup">
+        <h2>Water Tracker</h2>
+        <p>Track your daily water intake.</p>
+        <button onclick="closePopup('popup2')">Close</button>
     </div>
 
-    <!-- Mood Tracker -->
-    <div id="mood-popup" class="popup">
+    <div id="popup3" class="popup">
         <h2>Mood Tracker</h2>
-        <p id="mood-output">Your mood will appear here 😊</p>
-        <canvas id="moodGraph"></canvas>
-        <button onclick="closeMoodTracker()">Close</button>
+        <p id="moodResult">Mood will appear here 😊</p>
+        <button onclick="closePopup('popup3')">Close</button>
+    </div>
+
+    <div id="popup4" class="popup">
+        <h2>Diary (Voice Recorder)</h2>
+        <button onclick="startRecording()">🎤 Start Recording</button>
+        <button onclick="stopRecording()">🛑 Stop Recording</button>
+        <p id="recordedText"></p>
+        <button onclick="closePopup('popup4')">Close</button>
     </div>
 
     <script src="script.js"></script>
+
 </body>
 </html>

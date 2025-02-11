@@ -1,69 +1,68 @@
-// ✅ Profile Picture Upload
-document.getElementById("profileCircle").addEventListener("click", function() {
-    document.getElementById("fileInput").click();
-});
-document.getElementById("fileInput").addEventListener("change", function(event) {
-    let reader = new FileReader();
-    reader.onload = function(e) {
-        document.getElementById("profilePic").src = e.target.result;
-    };
-    reader.readAsDataURL(event.target.files[0]);
-});
+// Toggle Settings Dropdown
+function toggleDropdown() {
+    document.getElementById("settingsDropdown").classList.toggle("show");
+}
 
-// ✅ To-Do List Functions
-function openToDoList() {
-    document.getElementById("todo-popup").style.display = "block";
+// Toggle Dark Mode
+function toggleTheme() {
+    document.body.classList.toggle("dark-mode");
+    localStorage.setItem("darkMode", document.body.classList.contains("dark-mode"));
 }
-function closeToDoList() {
-    document.getElementById("todo-popup").style.display = "none";
+
+// Delete Task Function (if needed)
+function deleteTask(button) {
+    button.parentElement.remove();
 }
-document.getElementById("taskForm").addEventListener("submit", function(event) {
-    event.preventDefault();
-    let taskText = document.getElementById("taskInput").value.trim();
-    if (taskText) {
-        let li = document.createElement("li");
-        li.textContent = taskText;
-        document.getElementById("taskList").appendChild(li);
+
+// Function to Open Popups
+function openPopup(popupId) {
+    document.getElementById(popupId).style.display = "block";
+    document.getElementById("overlay").style.display = "block"; // Show Overlay
+}
+
+// Function to Close Popups
+function closePopup(popupId) {
+    document.getElementById(popupId).style.display = "none";
+    document.getElementById("overlay").style.display = "none"; // Hide Overlay
+}
+
+// Attach Click Events to Functional Boxes
+document.getElementById("box1").addEventListener("click", () => openPopup("popup1"));
+document.getElementById("box2").addEventListener("click", () => openPopup("popup2"));
+document.getElementById("box3").addEventListener("click", () => openPopup("popup3"));
+document.getElementById("box4").addEventListener("click", () => openPopup("popup4"));
+
+// Speech-to-Text for Diary
+let recognition;
+function startRecording() {
+    if (!window.SpeechRecognition && !window.webkitSpeechRecognition) {
+        alert("Your browser does not support speech recognition.");
+        return;
     }
-    document.getElementById("taskInput").value = "";
-});
-function clearTasks() {
-    document.getElementById("taskList").innerHTML = "";
-}
 
-// ✅ Diary (Voice Recorder)
-function openDiary() {
-    document.getElementById("diary-popup").style.display = "block";
-}
-function closeDiary() {
-    document.getElementById("diary-popup").style.display = "none";
-}
-function startVoiceRecording() {
-    let recognition = new webkitSpeechRecognition();
+    recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
     recognition.lang = "en-US";
-    recognition.start();
-    recognition.onresult = function(event) {
-        let text = event.results[0][0].transcript;
-        document.getElementById("voice-output").innerText = "You said: " + text;
-        analyzeMood(text);
+    recognition.interimResults = false;
+
+    recognition.onstart = () => {
+        document.getElementById("recordedText").innerText = "Listening...";
     };
+
+    recognition.onresult = (event) => {
+        let transcript = event.results[0][0].transcript;
+        document.getElementById("recordedText").innerText = "You said: " + transcript;
+    };
+
+    recognition.onerror = () => {
+        document.getElementById("recordedText").innerText = "Error in recording.";
+    };
+
+    recognition.start();
 }
 
-// ✅ Mood Tracker & API Integration
-function openMoodTracker() {
-    document.getElementById("mood-popup").style.display = "block";
-}
-function closeMoodTracker() {
-    document.getElementById("mood-popup").style.display = "none";
-}
-async function analyzeMood(text) {
-    let response = await fetch("https://api.textanalysis.com/sentiment", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ text: text })
-    });
-    let data = await response.json();
-    let mood = data.mood;
-    let emoji = mood === "positive" ? "😊" : mood === "negative" ? "😢" : "😐";
-    document.getElementById("mood-output").innerHTML = `Mood Detected: ${mood} ${emoji}`;
+function stopRecording() {
+    if (recognition) {
+        recognition.stop();
+        document.getElementById("recordedText").innerText += " (Recording Stopped)";
+    }
 }
