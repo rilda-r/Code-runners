@@ -2,6 +2,41 @@
 function toggleDropdown() {
     document.getElementById("settingsDropdown").classList.toggle("show");
 }
+// Dummy User Credentials
+const validUsername = "user";
+const validPassword = "1234";
+
+// Function to Handle Login
+function login() {
+    let username = document.getElementById("username").value;
+    let password = document.getElementById("password").value;
+
+    if (username === validUsername && password === validPassword) {
+        localStorage.setItem("isLoggedIn", "true"); // Store login state
+        showMainPage();
+    } else {
+        document.getElementById("loginError").innerText = "Invalid username or password!";
+    }
+}
+
+// Function to Show Main Page
+function showMainPage() {
+    document.getElementById("loginPage").style.display = "none";
+    document.getElementById("mainPage").style.display = "block";
+}
+
+// Function to Logout
+function logout() {
+    localStorage.removeItem("isLoggedIn");
+    location.reload();
+}
+
+// Check Login State on Page Load
+window.onload = function () {
+    if (localStorage.getItem("isLoggedIn") === "true") {
+        showMainPage();
+    }
+};
 
 // Toggle Dark Mode
 function toggleTheme() {
