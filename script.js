@@ -67,40 +67,7 @@ document.getElementById("box2").addEventListener("click", () => openPopup("popup
 document.getElementById("box3").addEventListener("click", () => openPopup("popup3"));
 document.getElementById("box4").addEventListener("click", () => openPopup("popup4"));
 
-// Speech-to-Text for Diary
-let recognition;
-function startRecording() {
-    if (!window.SpeechRecognition && !window.webkitSpeechRecognition) {
-        alert("Your browser does not support speech recognition.");
-        return;
-    }
 
-    recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
-    recognition.lang = "en-US";
-    recognition.interimResults = false;
-
-    recognition.onstart = () => {
-        document.getElementById("recordedText").innerText = "Listening...";
-    };
-
-    recognition.onresult = (event) => {
-        let transcript = event.results[0][0].transcript;
-        document.getElementById("recordedText").innerText = "You said: " + transcript;
-    };
-
-    recognition.onerror = () => {
-        document.getElementById("recordedText").innerText = "Error in recording.";
-    };
-
-    recognition.start();
-}
-
-function stopRecording() {
-    if (recognition) {
-        recognition.stop();
-        document.getElementById("recordedText").innerText += " (Recording Stopped)";
-    }
-}
 document.addEventListener('DOMContentLoaded', function() {
     const fileInput = document.getElementById('fileInput');
     const profilePic = document.getElementById('profilePic');
@@ -212,49 +179,79 @@ function loadTasks() {
         taskList.appendChild(li);
     });
 }
-let recordedText = "";
-
-// 🎤 Start Recording Function
-function startRecording() {
-    recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
-    recognition.lang = "en-US"; // Set language
-    recognition.interimResults = false; // Get only final result
-
-    recognition.onresult = (event) => {
-        recordedText = event.results[0][0].transcript;
-        document.getElementById("recordedText").innerText = recordedText;
-        analyzeMood(recordedText); // Send text for mood analysis
-    };
-
-    recognition.start();
-}
-
-// 🛑 Stop Recording Function
-function stopRecording() {
-    if (recognition) {
-        recognition.stop();
-    }
-}
-
 // 📊 Sentiment Analysis using API
-function analyzeMood(text) {
-    fetch("https://api.textgears.com/sentiment?key=YOUR_API_KEY&text=" + encodeURIComponent(text))
+function analyzeMood() {
+    const text = document.getElementById("moodText").value.trim();
+    if (!text) {
+        alert("Please enter some text for mood analysis!");
+        return;
+    }
+
+    const apiKey = "YOUR_API_KEY"; // Replace with your actual API key
+    const apiUrl = `https://api.textgears.com/sentiment?key=${apiKey}&text=${encodeURIComponent(text)}`;
+
+    fetch(apiUrl)
         .then(response => response.json())
         .then(data => {
-            let mood = data.response.score_tag;
-            let moodText = "Neutral";
-            let emoji = "😐";
+            if (data.response && data.response.score_tag) {
+                let mood = data.response.score_tag;
+                let moodText = "Neutral";
+                let emoji = "😐";
 
-            if (mood === "P+") { moodText = "Very Positive"; emoji = "😁"; }
-            else if (mood === "P") { moodText = "Positive"; emoji = "😊"; }
-            else if (mood === "NEU") { moodText = "Neutral"; emoji = "😐"; }
-            else if (mood === "N") { moodText = "Negative"; emoji = "😞"; }
-            else if (mood === "N+") { moodText = "Very Negative"; emoji = "😢"; }
+                // Match the sentiment score to a mood & emoji
+                if (mood === "P+") { moodText = "Very Positive"; emoji = "😁"; }
+                else if (mood === "P") { moodText = "Positive"; emoji = "😊"; }
+                else if (mood === "NEU") { moodText = "Neutral"; emoji = "😐"; }
+                else if (mood === "N") { moodText = "Negative"; emoji = "😞"; }
+                else if (mood === "N+") { moodText = "Very Negative"; emoji = "😢"; }
 
-            document.getElementById("moodResult").innerText = moodText + " " + emoji;
+                // Display the mood & emoji in the Mood Tracker box
+                document.getElementById("moodResult").innerText = moodText + " " + emoji;
+            } else {
+                document.getElementById("moodResult").innerText = "Unable to detect mood ❌";
+            }
         })
         .catch(error => {
             console.error("Error fetching mood:", error);
             document.getElementById("moodResult").innerText = "Mood analysis failed ❌";
         });
+}
+let recognition;
+let isRecording = false;
+
+// 🎤 Initialize Speech Recognition
+function initializeRecognition() {
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    recognition = new SpeechRecognition();
+    recognition.continuous = false; // Stop after one sentence
+    recognition.interimResults = false; // No partial results
+    recognition.lang = "en-US"; // Set language
+
+    recognition.onresult = (event) => {
+        const recordedText = event.results[0][0].transcript;
+        document.getElementById("recordedText").innerText = recordedText;
+    };
+
+    recognition.onerror = (event) => {
+        console.error("Speech recognition error:", event.error);
+        document.getElementById("recordedText").innerText = "Voice recognition failed ❌";
+    };
+}
+
+// 🎙 Start Recording
+function startRecording() {
+    if (!recognition) initializeRecognition();
+    if (isRecording) return;
+
+    document.getElementById("recordedText").innerText = "Listening...";
+    recognition.start();
+    isRecording = true;
+}
+
+// 🛑 Stop Recording
+function stopRecording() {
+    if (recognition && isRecording) {
+        recognition.stop();
+        isRecording = false;
+    }
 }

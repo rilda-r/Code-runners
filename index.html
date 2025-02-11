@@ -88,19 +88,11 @@
 
     <div id="popup3" class="popup">
         <h2>Mood Tracker</h2>
-        
-        <!-- Voice Recorder -->
-        <button onclick="startRecording()">🎤 Start Recording</button>
-        <button onclick="stopRecording()">🛑 Stop Recording</button>
-        
-        <!-- Display Transcribed Text -->
-        <p><strong>Recorded Text:</strong></p>
-        <p id="recordedText">Your speech will appear here...</p>
-    
-        <!-- Mood Result -->
+        <p><strong>Enter Text for Mood Analysis:</strong></p>
+        <textarea id="moodText" placeholder="Type or paste your text here..."></textarea>
+        <button onclick="analyzeMood()">Analyze Mood</button>
         <p><strong>Detected Mood:</strong></p>
         <p id="moodResult">Mood will appear here 😊</p>
-    
         <button onclick="closePopup('popup3')">Close</button>
     </div>
     
@@ -109,7 +101,8 @@
         <h2>Diary (Voice Recorder)</h2>
         <button onclick="startRecording()">🎤 Start Recording</button>
         <button onclick="stopRecording()">🛑 Stop Recording</button>
-        <p id="recordedText"></p>
+        <p><strong>Recorded Text:</strong></p>
+        <p id="recordedText">Your speech will appear here...</p>
         <button onclick="closePopup('popup4')">Close</button>
     </div>
 
